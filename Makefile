@@ -97,6 +97,10 @@ export OMV_BOARD_CONFIG_DIR:=$(TOP_DIR)/boards/$(TARGET)/
 export OMV_LIB_DIR:=$(TOP_DIR)/scripts/libraries
 export FROZEN_MANIFEST:=$(OMV_BOARD_CONFIG_DIR)/manifest.py
 
+# Add this near the top of openmv/src/Makefile
+# export USER_C_MODULES ?= $(abspath $(TOP_DIR)/user_modules)
+
+
 # Prepend SDK bin directories to PATH.
 STEDGEAI_CORE := $(SDK_DIR)/stedgeai
 STEDGEAI_UTIL := Utilities/$(if $(filter Darwin,$(shell uname -s)),macarm,linux)
@@ -156,7 +160,7 @@ include $(OMV_BOARD_CONFIG_DIR)/board_config.mk
 #include $(MP_BOARD_CONFIG_DIR)/mpconfigboard.mk
 
 # Additional qstr definitions for OpenMV
-#OMV_SRC_QSTR := $(wildcard $(TOP_DIR)/modules/*.c)
+OMV_SRC_QSTR := $(wildcard $(TOP_DIR)/modules/*.c)
 
 export OMV_PORT_DIR:=$(TOP_DIR)/ports/$(PORT)
 export MP_BOARD_CONFIG_DIR:=$(TOP_DIR)/$(MICROPY_DIR)/ports/$(PORT)/boards/$(TARGET)/

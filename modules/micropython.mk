@@ -30,6 +30,12 @@ OMV_PORT_MOD_DIR := $(OMV_MOD_DIR)/../ports/$(PORT)/modules
 SRC_USERMOD += $(wildcard $(OMV_PORT_MOD_DIR)/*.c)
 SRC_USERMOD_CXX += $(wildcard $(OMV_PORT_MOD_DIR)/*.cpp)
 
+# Common flags for both C and C++ modules (Includes, warnings, etc.)
+COMMON_USERMOD_FLAGS := \
+        -I$(OMV_MOD_DIR) \
+        -I$(OMV_PORT_MOD_DIR) \
+        -Wno-float-conversion
+
 # Extra module flags.
 CFLAGS_USERMOD += \
         -std=gnu11 \
