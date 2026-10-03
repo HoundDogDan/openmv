@@ -170,6 +170,12 @@ MPY_MKARGS = PORT=$(PORT) BOARD=$(TARGET) DEBUG=$(DEBUG) MICROPY_MANIFEST_OMV_LI
              FROZEN_MANIFEST=$(FROZEN_MANIFEST) OMV_SRC_QSTR="$(OMV_SRC_QSTR)"\
              MICROPY_ROM_TEXT_COMPRESSION=$(ROM_TEXT_COMPRESSION) USER_C_MODULES=$(TOP_DIR)
 
+# Allow a target to keep its MicroPython board configuration outside the submodule.
+ifneq ($(OMV_MPY_BOARD_DIR),)
+export MP_BOARD_CONFIG_DIR := $(OMV_MPY_BOARD_DIR)
+MPY_MKARGS += BOARD_DIR=$(MP_BOARD_CONFIG_DIR)
+endif
+
 # Include the port Makefile.
 include $(OMV_PORT_DIR)/port_config.mk
 
@@ -221,7 +227,8 @@ sdk:
 	$(Q)bash -c "source tools/ci.sh && ci_install_sdk"
 
 submodules:
-	$(MAKE) -C $(MICROPY_DIR)/ports/$(PORT) BOARD=$(TARGET) submodules
+#	$(MAKE) -C $(MICROPY_DIR)/ports/$(PORT) BOARD=$(TARGET) submodules
+	$(MAKE) -C $(MICROPY_DIR)/ports/$(PORT) $(MPY_MKARGS) submodules
 
 debug: $(ROMFS_IMAGE)
 ifeq ($(DEBUGGER),NONE)

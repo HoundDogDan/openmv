@@ -1,27 +1,49 @@
- make build-firmware-dev TARGET=OPENMV_N6 V=1
 docker build \
         -t firmware-builder:latest \
         -f Dockerfile .
-[+] Building 0.9s (9/9) FINISHED                                                                                                             docker:default
- => [internal] load build definition from Dockerfile                                                                                                   0.0s
- => => transferring dockerfile: 417B                                                                                                                   0.0s
- => [internal] load metadata for docker.io/library/ubuntu:24.04                                                                                        0.6s
- => [auth] library/ubuntu:pull token for registry-1.docker.io                                                                                          0.0s
- => [internal] load .dockerignore                                                                                                                      0.0s
- => => transferring context: 2B                                                                                                                        0.0s
- => [1/4] FROM docker.io/library/ubuntu:24.04@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254                                  0.0s
- => => resolve docker.io/library/ubuntu:24.04@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254                                  0.0s
- => CACHED [2/4] RUN apt update && apt install -y     build-essential     wget     git     libglib2.0-0                                                0.0s
- => CACHED [3/4] WORKDIR /workspace                                                                                                                    0.0s
- => CACHED [4/4] RUN git config --global --add safe.directory '*'                                                                                      0.0s
- => exporting to image                                                                                                                                 0.1s
- => => exporting layers                                                                                                                                0.0s
- => => exporting manifest sha256:7f612c94f6cf915d7fa0e7c64aa79d80ba84ba03aa869c1a725e782472240405                                                      0.0s
- => => exporting config sha256:15150e7300b6cdc4be9d150e5beb03d8fbb4e275cadfcdd1a07ab6078df57928                                                        0.0s
- => => exporting attestation manifest sha256:226a193f464f4d4e97f66b182cca55d088b85bde7f14b36a13a612e4c8c0f2a1                                          0.0s
- => => exporting manifest list sha256:13bf635d83d7a8efedcb16a1cf0f81b018e05849a4398a732e5b88de9a2afcb5                                                 0.0s
- => => naming to docker.io/library/firmware-builder:latest                                                                                             0.0s
- => => unpacking to docker.io/library/firmware-builder:latest                                                                                          0.0s
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 417B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:24.04
+#2 ...
+
+#3 [auth] library/ubuntu:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:24.04
+#2 DONE 1.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [1/4] FROM docker.io/library/ubuntu:24.04@sha256:008173c23f95b170204355c12626cb5a965d779a7e1283b09e9cffbb1bf33ca3
+#5 resolve docker.io/library/ubuntu:24.04@sha256:008173c23f95b170204355c12626cb5a965d779a7e1283b09e9cffbb1bf33ca3 0.0s done
+#5 DONE 0.0s
+
+#6 [2/4] RUN apt update && apt install -y     build-essential     wget     git     libglib2.0-0
+#6 CACHED
+
+#7 [3/4] WORKDIR /workspace
+#7 CACHED
+
+#8 [4/4] RUN git config --global --add safe.directory '*'
+#8 CACHED
+
+#9 exporting to image
+#9 exporting layers done
+#9 exporting manifest sha256:c1a9a27c8eb10b90dbc901618e4e442dbb81df0db6befec0ea3b1a22cad1570e done
+#9 exporting config sha256:d324eb512b912087be5d860701138924414b7420a72cc1313c71ac8f7762079e done
+#9 exporting attestation manifest sha256:d99bd5af1fb0629e8f79a78e4dc0f5ce72324fcec5c22f607f027a962e1eb609
+#9 exporting attestation manifest sha256:d99bd5af1fb0629e8f79a78e4dc0f5ce72324fcec5c22f607f027a962e1eb609 0.1s done
+#9 exporting manifest list sha256:a5d2e9d90aed0d56773fb60c6e9de86d51771426bfcc3547e04a080fb7616711 0.0s done
+#9 naming to docker.io/library/firmware-builder:latest
+#9 naming to docker.io/library/firmware-builder:latest done
+#9 unpacking to docker.io/library/firmware-builder:latest 0.0s done
+#9 DONE 0.2s
 docker run --rm \
         --user 1000:1000 \
         -e HOME=/tmp \
@@ -41,6 +63,7 @@ docker run --rm \
 +++ nproc
 ++ make -j20 TARGET=OPENMV_N6 submodules
 Use make V=1 or set BUILD_VERBOSE in your environment to increase build verbosity.
+Including User C Module from /home/danny/REPOS/openmv-n6/openmv/modules
 Updating submodules: lib/mbedtls lib/lwip lib/cyw43-driver lib/mynewt-nimble lib/libhydrogen lib/stm32lib lib/tinyusb lib/micropython-lib
 Synchronizing submodule url for 'lib/cyw43-driver'
 Synchronizing submodule url for 'lib/libhydrogen'
@@ -54,6 +77,12 @@ Synchronizing submodule url for 'lib/tinyusb'
 ++ make -j20 -C lib/micropython/mpy-cross
 make: Entering directory '/home/danny/REPOS/openmv-n6/openmv/lib/micropython/mpy-cross'
 Use make V=1 or set BUILD_VERBOSE in your environment to increase build verbosity.
+GEN build/genhdr/mpversion.h
+CC ../py/modsys.c
+CC main.c
+LINK build/mpy-cross
+   text	   data	    bss	    dec	    hex	filename
+ 411998	  19752	    880	 432630	  699f6	build/mpy-cross
 make: Leaving directory '/home/danny/REPOS/openmv-n6/openmv/lib/micropython/mpy-cross'
 +++ nproc
 ++ make -j20 TARGET=OPENMV_N6
@@ -91,23 +120,23 @@ CC ../../lib/stm32/n6/src/stm32n6xx_hal_bsec.c
 Memory region         Used Size  Region Size  %age Used
              RAM:       22576 B       128 KB     17.22%
              ROM:       46316 B       512 KB      8.83%
-   text    data     bss     dec     hex filename
-  46284      32   22320   68636   10c1c /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/bin/bootloader.elf
+   text	   data	    bss	    dec	    hex	filename
+  46284	     32	  22320	  68636	  10c1c	/home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/bin/bootloader.elf
 Detected locale "C" with character encoding "ANSI_X3.4-1968", which is not UTF-8.
 Qt depends on a UTF-8 locale, and has switched to "C.UTF-8" instead.
 If this causes problems, reconfigure your locale. See the locale(1) manual
 for more information.
-       -------------------------------------------------------------------
-                       STM32 Signing Tool v2.21.0
-       -------------------------------------------------------------------
+[36m     [01m  -------------------------------------------------------------------
+[0m[39;49m[36m                       STM32 Signing Tool v2.21.0                     
+[0m[39;49m[36m     [01m  -------------------------------------------------------------------
 
-[Header v2.3] Align the payload to the 0x400 offset by adding padding bytes at the beginning of the payload.
-Adding head padding bytes for payload with header v2.3
- Header version 2.3 preparation...
-Extracting Entry point value from the input file...
-Entry point value : 0x34184b39
- The headred image file generated successfully:  /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/bin/bootloader.bin
-GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/pins.h
+[0m[39;49m[00;35m[Header v2.3] Align the payload to the 0x400 offset by adding padding bytes at the beginning of the payload.
+[0m[39;49m[0m[39;49mAdding head padding bytes for payload with header v2.3
+[0m[39;49m[36m Header version 2.3 preparation... 
+[0m[39;49m[0m[39;49mExtracting Entry point value from the input file...
+[0m[39;49m[0m[39;49mEntry point value : 0x34184b39
+[0m[39;49m[00;32m The headred image file generated successfully: [0m[39;49m[49m /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/bin/bootloader.bin
+[0m[39;49mGEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/pins.h
 GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/pybcdc.inf
 GEN stmconst /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/modstm_const.h
 GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/pybcdc_inf.h
@@ -120,19 +149,23 @@ GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/co
 GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/plli2stable.h
 GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/pllfreqtable.h
 GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/moduledefs.collected
-GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/root_pointers.collected
 GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/compressed.collected
+GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/root_pointers.collected
+GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/qstrdefs.collected.h
 Module registrations updated
-GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/moduledefs.h
 Root pointer registrations updated
 Compressed data updated
+GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/moduledefs.h
 GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/root_pointers.h
 GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/compressed.data.h
-GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/qstrdefs.collected.h
 QSTR updated
 GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/genhdr/qstrdefs.generated.h
-AS resethandler_iram.s
 AS ../../shared/runtime/gchelper_thumb2.s
+AS resethandler_iram.s
+CC /home/danny/REPOS/openmv-n6/openmv/modules/mod_ook_frontend.c
+CC /home/danny/REPOS/openmv-n6/openmv/modules/ook_frontend.c
+CC /home/danny/REPOS/openmv-n6/openmv/modules/pay_cnn.c
+CC /home/danny/REPOS/openmv-n6/openmv/modules/pay_rlif.c
 CC /home/danny/REPOS/openmv-n6/openmv/modules/py_clock.c
 CC /home/danny/REPOS/openmv-n6/openmv/modules/py_crc.c
 CC /home/danny/REPOS/openmv-n6/openmv/modules/py_csi.c
@@ -295,8 +328,8 @@ CC ../../py/objstringio.c
 CC ../../py/objtemplate.c
 CC ../../py/objtuple.c
 CC ../../py/objtype.c
-CC ../../py/objzip.c
 CC ../../py/opmethods.c
+CC ../../py/objzip.c
 CC ../../py/sequence.c
 CC ../../py/stream.c
 CC ../../py/binary.c
@@ -366,6 +399,20 @@ CC ../../extmod/modselect.c
 CC ../../extmod/modsocket.c
 CC ../../extmod/modtls_axtls.c
 CC ../../extmod/modtls_mbedtls.c
+CC ../../extmod/mbedtls/mbedtls_alt.c
+CC ../../extmod/modtime.c
+CC ../../extmod/moductypes.c
+CC ../../extmod/modvfs.c
+CC ../../extmod/modwebrepl.c
+CC ../../extmod/modwebsocket.c
+CC ../../extmod/network_cyw43.c
+CC ../../extmod/network_esp_hosted.c
+CC ../../extmod/network_lwip.c
+CC ../../extmod/network_ninaw10.c
+CC ../../extmod/network_ppp_lwip.c
+CC ../../extmod/network_wiznet5k.c
+CC ../../extmod/os_dupterm.c
+CC ../../extmod/vfs.c
 MPY modbus.py
 MPY pid.py
 MPY bno055.py
@@ -436,20 +483,6 @@ MPY asyncio/stream.py
 MPY uasyncio.py
 MPY _boot.py
 GEN /home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/lib/micropython/frozen_content.c
-CC ../../extmod/mbedtls/mbedtls_alt.c
-CC ../../extmod/modtime.c
-CC ../../extmod/moductypes.c
-CC ../../extmod/modvfs.c
-CC ../../extmod/modwebrepl.c
-CC ../../extmod/modwebsocket.c
-CC ../../extmod/network_cyw43.c
-CC ../../extmod/network_esp_hosted.c
-CC ../../extmod/network_lwip.c
-CC ../../extmod/network_ninaw10.c
-CC ../../extmod/network_ppp_lwip.c
-CC ../../extmod/network_wiznet5k.c
-CC ../../extmod/os_dupterm.c
-CC ../../extmod/vfs.c
 CC ../../extmod/vfs_blockdev.c
 CC ../../extmod/vfs_fat.c
 CC ../../extmod/vfs_fat_diskio.c
@@ -505,8 +538,8 @@ CC ../../lib/mbedtls/library/md5.c
 CC ../../lib/mbedtls/library/md.c
 CC ../../lib/mbedtls/library/oid.c
 CC ../../lib/mbedtls/library/padlock.c
-CC ../../lib/mbedtls/library/pk.c
 CC ../../lib/mbedtls/library/pem.c
+CC ../../lib/mbedtls/library/pk.c
 CC ../../lib/mbedtls/library/pkcs12.c
 CC ../../lib/mbedtls/library/pkcs5.c
 CC ../../lib/mbedtls/library/pkparse.c
@@ -515,8 +548,8 @@ CC ../../lib/mbedtls/library/pk_wrap.c
 CC ../../lib/mbedtls/library/pkwrite.c
 CC ../../lib/mbedtls/library/platform.c
 CC ../../lib/mbedtls/library/platform_util.c
-CC ../../lib/mbedtls/library/ripemd160.c
 CC ../../lib/mbedtls/library/poly1305.c
+CC ../../lib/mbedtls/library/ripemd160.c
 CC ../../lib/mbedtls/library/rsa.c
 CC ../../lib/mbedtls/library/rsa_alt_helpers.c
 CC ../../lib/mbedtls/library/sha1.c
@@ -557,8 +590,8 @@ CC ../../lib/lwip/src/core/raw.c
 CC ../../lib/lwip/src/core/stats.c
 CC ../../lib/lwip/src/core/sys.c
 CC ../../lib/lwip/src/core/tcp.c
-CC ../../lib/lwip/src/core/tcp_out.c
 CC ../../lib/lwip/src/core/tcp_in.c
+CC ../../lib/lwip/src/core/tcp_out.c
 CC ../../lib/lwip/src/core/timeouts.c
 CC ../../lib/lwip/src/core/udp.c
 CC ../../lib/lwip/src/core/ipv4/acd.c
@@ -653,8 +686,8 @@ CC ../../lib/mynewt-nimble/nimble/host/src/ble_l2cap_sig.c
 CC ../../lib/mynewt-nimble/nimble/host/src/ble_l2cap_sig_cmd.c
 CC ../../lib/mynewt-nimble/nimble/host/src/ble_monitor.c
 CC ../../lib/mynewt-nimble/nimble/host/src/ble_sm_alg.c
-CC ../../lib/mynewt-nimble/nimble/host/src/ble_sm.c
 CC ../../lib/mynewt-nimble/nimble/host/src/ble_sm_cmd.c
+CC ../../lib/mynewt-nimble/nimble/host/src/ble_sm.c
 CC ../../lib/mynewt-nimble/nimble/host/src/ble_sm_lgcy.c
 CC ../../lib/mynewt-nimble/nimble/host/src/ble_sm_sc.c
 CC ../../lib/mynewt-nimble/nimble/host/src/ble_store.c
@@ -846,9 +879,9 @@ CC lib/stm32/n6/src/stm32n6xx_hal_crc_ex.c
 CC lib/stm32/n6/src/stm32n6xx_hal_cryp.c
 CC lib/stm32/n6/src/stm32n6xx_hal_cryp_ex.c
 CC lib/stm32/n6/src/stm32n6xx_hal_dcmi.c
-CC lib/stm32/n6/src/stm32n6xx_hal_dcmipp.c
-CC lib/stm32/n6/src/stm32n6xx_hal_dma2d.c
 CC lib/stm32/n6/src/stm32n6xx_hal_dma.c
+CC lib/stm32/n6/src/stm32n6xx_hal_dma2d.c
+CC lib/stm32/n6/src/stm32n6xx_hal_dcmipp.c
 CC lib/stm32/n6/src/stm32n6xx_hal_dma_ex.c
 CC lib/stm32/n6/src/stm32n6xx_hal_dts.c
 CC lib/stm32/n6/src/stm32n6xx_hal_eth.c
@@ -956,8 +989,8 @@ CC common/vospi.c
 CC common/queue.c
 CC common/omv_cycles.c
 CC common/omv_profiler.c
-CC protocol/omv_protocol.c
 CC common/umalloc.c
+CC protocol/omv_protocol.c
 CC protocol/omv_protocol_channel_stdio.c
 CC protocol/omv_protocol_channel_stream.c
 CC protocol/omv_protocol_channel_profile.c
@@ -986,20 +1019,20 @@ CC drivers/genx320/src/genx320_issd_cpi_histo.c
 CC drivers/genx320/src/psee_genx320.c
 CC drivers/lepton/src/crc16fast.c
 CC drivers/lepton/src/LEPTON_AGC.c
-CC drivers/lepton/src/LEPTON_I2C_Protocol.c
 CC drivers/lepton/src/LEPTON_I2C_Service.c
+CC drivers/lepton/src/LEPTON_I2C_Protocol.c
 CC drivers/lepton/src/LEPTON_OEM.c
 CC drivers/lepton/src/LEPTON_RAD.c
 CC drivers/lepton/src/LEPTON_SDK.c
-CC drivers/lepton/src/LEPTON_SYS.c
 CC drivers/lepton/src/LEPTON_VID.c
+CC drivers/lepton/src/LEPTON_SYS.c
 CC drivers/lsm6ds3/src/lsm6ds3_reg.c
 CC drivers/lsm6ds3/src/lsm6ds3tr_c_reg.c
 CC drivers/lsm6dsm/src/lsm6dsm_reg.c
 CC drivers/lsm6dsox/src/lsm6dsox_reg.c
 CC drivers/mlx90621/src/MLX90621_API.c
-CC drivers/mlx90621/src/MLX90621_I2C_Driver.c
 CC drivers/mlx90640/src/MLX90640_API.c
+CC drivers/mlx90621/src/MLX90621_I2C_Driver.c
 CC drivers/mlx90640/src/MLX90640_I2C_Driver.c
 CC drivers/mlx90641/src/MLX90641_API.c
 CC drivers/mlx90641/src/MLX90641_I2C_Driver.c
@@ -1039,8 +1072,8 @@ CC drivers/vc8000/src/h264/H264NalUnit.c
 CC drivers/vc8000/src/h264/H264PictureBuffer.c
 CC drivers/vc8000/src/h264/H264PictureParameterSet.c
 CC drivers/vc8000/src/h264/H264PutBits.c
-CC drivers/vc8000/src/h264/H264RateControl.c
 CC drivers/vc8000/src/h264/H264Sei.c
+CC drivers/vc8000/src/h264/H264RateControl.c
 CC drivers/vc8000/src/h264/H264SequenceParameterSet.c
 CC drivers/vc8000/src/h264/H264Slice.c
 CC drivers/vc8000/src/h264/H264TestId.c
@@ -1136,8 +1169,8 @@ CC lib/stai/libstai/ll_aton/ll_aton_debug.c
 CC lib/stai/libstai/ll_aton/ll_aton_lib.c
 CC lib/stai/libstai/ll_aton/ll_aton_lib_sw_operators.c
 CC lib/stai/libstai/ll_aton/ll_aton_profiler.c
-CC lib/stai/libstai/ll_aton/ll_aton_rt_main.c
 CC lib/stai/libstai/ll_aton/ll_aton_reloc_network.c
+CC lib/stai/libstai/ll_aton/ll_aton_rt_main.c
 CC lib/stai/libstai/ll_aton/ll_aton_runtime.c
 CC lib/stai/libstai/ll_aton/ll_aton_util.c
 CC lib/stai/libstai/ll_aton/ll_sw_float.c
@@ -1166,10 +1199,254 @@ GEN linker script
 Memory region         Used Size  Region Size  %age Used
             DTCM:        128 KB       128 KB    100.00%
             ITCM:        6256 B        64 KB      9.55%
-           SRAM1:     1027648 B         1 MB     98.00%
+           SRAM1:     1028000 B         1 MB     98.04%
            SRAM2:          1 MB         1 MB    100.00%
            SRAM3:       1792 KB      1792 KB    100.00%
            SRAM7:          1 KB        32 KB      3.12%
             DRAM:         56 MB        64 MB     87.50%
-      FLASH_TEXT:     1988808 B      3584 KB     54.19%
+      FLASH_TEXT:     2004216 B      3584 KB     54.61%
 GEN romfs image
+[94mCascade:                       haarcascade_smile                                 
+[94mFormat:                        Old                                               
+[94mSize:                          [91m36x18                                             
+[94mNumber of Stages:              [91m20                                                
+[94mNumber of Features:            [92m569                                               
+[94mNumber of Rectangles:          [92m1245                                              
+[0m
+[94mCascade:                       haarcascade_eye                                   
+[94mFormat:                        Old                                               
+[94mSize:                          [91m20x20                                             
+[94mNumber of Stages:              [91m24                                                
+[94mNumber of Features:            [92m1066                                              
+[94mNumber of Rectangles:          [92m2299                                              
+[0m
+[94mCascade:                       haarcascade_frontalface                           
+[94mFormat:                        Old                                               
+[94mSize:                          [91m24x24                                             
+[94mNumber of Stages:              [91m25                                                
+[94mNumber of Features:            [92m2913                                              
+[94mNumber of Rectangles:          [92m6383                                              
+[0m
+[92mModel: yolo_lc_192[0m
+[94mXIP size             = 34,560     data(596)+got(52)+bss(33856) sections
+COPY size            = 75,776     +ro(41216) sections
+extra sections       = 228        got:52(0.2%) header+rel:176(0.4%)
+params size          = 275,905
+acts size            = 258,048
+binary file size     = 317,848
+params file size     = 0
+
++--------------------------+----------------------------------+------+------------+--------+
+| name (addr)              | flags                            | foff | dst        | size   |
++--------------------------+----------------------------------+------+------------+--------+
+| xSPI2 (0x20001b69)       | 0x01010500 RELOC.PARAM.0.RCACHED | 0    | 0x00000000 | 275905 |
+| AXISRAM5 (0x20001b6f)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x342e0000 | 258048 |
+| <undefined> (0x00000000) | 0x00000000 UNUSED                | 0    | 0x00000000 | 0      |
++--------------------------+----------------------------------+------+------------+--------+
+Table: mempool c-descriptors (off=40000218, 3 entries, from RAM)
+[0m
+
+[92mModel: fomo_face_detection[0m
+[94mXIP size             = 29,440     data(596)+got(56)+bss(28736) sections
+COPY size            = 72,008     +ro(42568) sections
+extra sections       = 240        got:56(0.2%) header+rel:184(0.4%)
+params size          = 20,753
+acts size            = 138,240
+binary file size     = 64,064
+params file size     = 0
+
++--------------------------+----------------------------------+------+------------+--------+
+| name (addr)              | flags                            | foff | dst        | size   |
++--------------------------+----------------------------------+------+------------+--------+
+| xSPI2 (0x2000344c)       | 0x01010500 RELOC.PARAM.0.RCACHED | 0    | 0x00000000 | 20753  |
+| AXISRAM5 (0x20003452)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x342e0000 | 138240 |
+| <undefined> (0x00000000) | 0x00000000 UNUSED                | 0    | 0x00000000 | 0      |
++--------------------------+----------------------------------+------+------------+--------+
+Table: mempool c-descriptors (off=40000218, 3 entries, from RAM)
+[0m
+
+[92mModel: force_int_quant[0m
+[94mXIP size             = 4,992      data(596)+got(52)+bss(4288) sections
+COPY size            = 16,512     +ro(11520) sections
+extra sections       = 220        got:52(1.0%) header+rel:168(1.5%)
+params size          = 6,865
+acts size            = 180
+binary file size     = 19,104
+params file size     = 0
+
++--------------------------+----------------------------------+------+------------+------+
+| name (addr)              | flags                            | foff | dst        | size |
++--------------------------+----------------------------------+------+------------+------+
+| xSPI2 (0x20001b58)       | 0x01010500 RELOC.PARAM.0.RCACHED | 0    | 0x00000000 | 6865 |
+| AXISRAM5 (0x20001b5e)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x342e0000 | 180  |
+| <undefined> (0x00000000) | 0x00000000 UNUSED                | 0    | 0x00000000 | 0    |
++--------------------------+----------------------------------+------+------------+------+
+Table: mempool c-descriptors (off=40000218, 3 entries, from RAM)
+[0m
+
+[92mModel: person_detect[0m
+[94mXIP size             = 48,384     data(548)+got(56)+bss(47744) sections
+COPY size            = 110,216    +ro(61832) sections
+extra sections       = 236        got:56(0.1%) header+rel:180(0.3%)
+params size          = 211,745
+acts size            = 55,296
+binary file size     = 274,272
+params file size     = 0
+
++--------------------------+----------------------------------+------+------------+--------+
+| name (addr)              | flags                            | foff | dst        | size   |
++--------------------------+----------------------------------+------+------------+--------+
+| xSPI2 (0x2000352f)       | 0x01010500 RELOC.PARAM.0.RCACHED | 0    | 0x00000000 | 211745 |
+| AXISRAM5 (0x20003535)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x342e0000 | 55296  |
+| <undefined> (0x00000000) | 0x00000000 UNUSED                | 0    | 0x00000000 | 0      |
++--------------------------+----------------------------------+------+------------+--------+
+Table: mempool c-descriptors (off=400001e8, 3 entries, from RAM)
+[0m
+
+[92mModel: face_landmarks_192[0m
+[94mXIP size             = 146,304    data(2336)+got(220)+bss(143744) sections
+COPY size            = 303,488    +ro(157184) sections
+extra sections       = 608        got:220(0.2%) header+rel:388(0.2%)
+params size          = 616,577
+acts size            = 737,280
+binary file size     = 776,616
+params file size     = 0
+
++--------------------------+----------------------------------+------+------------+--------+
+| name (addr)              | flags                            | foff | dst        | size   |
++--------------------------+----------------------------------+------+------------+--------+
+| xSPI2 (0x20002e6a)       | 0x01010500 RELOC.PARAM.0.RCACHED | 0    | 0x00000000 | 616577 |
+| AXISRAM5 (0x20002e70)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x342e0000 | 442368 |
+| AXISRAM4 (0x20002e79)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x34270000 | 294912 |
+| <undefined> (0x00000000) | 0x00000000 UNUSED                | 0    | 0x00000000 | 0      |
++--------------------------+----------------------------------+------+------------+--------+
+Table: mempool c-descriptors (off=400008d0, 4 entries, from RAM)
+[0m
+
+[92mModel: hand_landmarks_full_224[0m
+[94mXIP size             = 128,320    data(968)+got(64)+bss(127232) sections
+COPY size            = 265,856    +ro(137536) sections
+extra sections       = 304        got:64(0.0%) header+rel:240(0.2%)
+params size          = 3,182,977
+acts size            = 1,781,248
+binary file size     = 3,321,688
+params file size     = 0
+
++--------------------------+----------------------------------+------+------------+---------+
+| name (addr)              | flags                            | foff | dst        | size    |
++--------------------------+----------------------------------+------+------------+---------+
+| xSPI1 (0x20002407)       | 0x01020601 RELOC.ACTIV.1.WCACHED | 0    | 0x00000000 | 802816  |
+| xSPI2 (0x2000240d)       | 0x01010500 RELOC.PARAM.0.RCACHED | 0    | 0x00000000 | 3182977 |
+| AXISRAM5 (0x20002413)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x342e0000 | 451584  |
+| AXISRAM4 (0x2000241c)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x34270000 | 451584  |
+| AXISRAM3 (0x20002425)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x34200000 | 75264   |
+| <undefined> (0x00000000) | 0x00000000 UNUSED                | 0    | 0x00000000 | 0       |
++--------------------------+----------------------------------+------+------------+---------+
+Table: mempool c-descriptors (off=40000350, 6 entries, from RAM)
+[0m
+
+[92mModel: palm_detection_full_192[0m
+[94mXIP size             = 323,200    data(2112)+got(220)+bss(320832) sections
+COPY size            = 666,192    +ro(342992) sections
+extra sections       = 596        got:220(0.1%) header+rel:376(0.1%)
+params size          = 1,122,641
+acts size            = 1,506,496
+binary file size     = 1,468,248
+params file size     = 0
+
++--------------------------+----------------------------------+------+------------+---------+
+| name (addr)              | flags                            | foff | dst        | size    |
++--------------------------+----------------------------------+------+------------+---------+
+| xSPI2 (0x20004e75)       | 0x01010500 RELOC.PARAM.0.RCACHED | 0    | 0x00000000 | 1122641 |
+| AXISRAM6 (0x20004e7b)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x34350000 | 294912  |
+| AXISRAM5 (0x20004e84)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x342e0000 | 457920  |
+| AXISRAM4 (0x20004e8d)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x34270000 | 294912  |
+| AXISRAM3 (0x20004e96)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x34200000 | 458752  |
+| <undefined> (0x00000000) | 0x00000000 UNUSED                | 0    | 0x00000000 | 0       |
++--------------------------+----------------------------------+------+------------+---------+
+Table: mempool c-descriptors (off=400007c8, 6 entries, from RAM)
+[0m
+
+[92mModel: blazeface_front_128[0m
+[94mXIP size             = 88,704     data(5696)+got(756)+bss(82240) sections
+COPY size            = 193,216    +ro(104512) sections
+extra sections       = 1,444      got:756(0.9%) header+rel:688(0.7%)
+params size          = 108,673
+acts size            = 540,672
+binary file size     = 220,232
+params file size     = 0
+
++--------------------------+----------------------------------+------+------------+--------+
+| name (addr)              | flags                            | foff | dst        | size   |
++--------------------------+----------------------------------+------+------------+--------+
+| xSPI2 (0x20003eea)       | 0x01010500 RELOC.PARAM.0.RCACHED | 0    | 0x00000000 | 108673 |
+| AXISRAM5 (0x20003ef0)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x342e0000 | 425984 |
+| AXISRAM4 (0x20003ef9)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x34270000 | 114688 |
+| <undefined> (0x00000000) | 0x00000000 UNUSED                | 0    | 0x00000000 | 0      |
++--------------------------+----------------------------------+------+------------+--------+
+Table: mempool c-descriptors (off=400015f0, 4 entries, from RAM)
+[0m
+
+[92mModel: movenet_singlepose_192[0m
+[94mXIP size             = 143,360    data(924)+got(92)+bss(142336) sections
+COPY size            = 302,480    +ro(159120) sections
+extra sections       = 312        got:92(0.1%) header+rel:220(0.1%)
+params size          = 2,638,753
+acts size            = 1,327,104
+binary file size     = 2,799,016
+params file size     = 0
+
++--------------------------+----------------------------------+------+------------+---------+
+| name (addr)              | flags                            | foff | dst        | size    |
++--------------------------+----------------------------------+------+------------+---------+
+| xSPI2 (0x20003d07)       | 0x01010500 RELOC.PARAM.0.RCACHED | 0    | 0x00000000 | 2638753 |
+| AXISRAM5 (0x20003d0d)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x342e0000 | 442368  |
+| AXISRAM4 (0x20003d16)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x34270000 | 425984  |
+| AXISRAM3 (0x20003d1f)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x34200000 | 458752  |
+| <undefined> (0x00000000) | 0x00000000 UNUSED                | 0    | 0x00000000 | 0       |
++--------------------------+----------------------------------+------+------------+---------+
+Table: mempool c-descriptors (off=40000338, 5 entries, from RAM)
+[0m
+
+[92mModel: yolov8n_192[0m
+[94mXIP size             = 195,648    data(5148)+got(252)+bss(190208) sections
+COPY size            = 415,816    +ro(220168) sections
+extra sections       = 1,192      got:252(0.1%) header+rel:940(0.4%)
+params size          = 3,006,993
+acts size            = 276,480
+binary file size     = 3,233,408
+params file size     = 0
+
++--------------------------+----------------------------------+------+------------+---------+
+| name (addr)              | flags                            | foff | dst        | size    |
++--------------------------+----------------------------------+------+------------+---------+
+| xSPI2 (0x200064e7)       | 0x01010500 RELOC.PARAM.0.RCACHED | 0    | 0x00000000 | 3006993 |
+| AXISRAM5 (0x200064ed)    | 0x03020200 RESET.ACTIV.WRITE     | 0    | 0x342e0000 | 276480  |
+| <undefined> (0x00000000) | 0x00000000 UNUSED                | 0    | 0x00000000 | 0       |
++--------------------------+----------------------------------+------+------------+---------+
+Table: mempool c-descriptors (off=400013e0, 3 entries, from RAM)
+[0m
+
+[94mromfs image: [91m"romfs0.img" [94musage: [91m12282.3KiB / [91m24576.0KiB ([91m50.0%)[0m
+ [94m-size: [91m64064    [94malignment: [91m32   [94mpath: [92m/rom/fomo_face_detection.tflite[0m
+ [94m-size: [91m15       [94malignment: [91m4    [94mpath: [92m/rom/fomo_face_detection.txt[0m
+ [94m-size: [91m19104    [94malignment: [91m32   [94mpath: [92m/rom/force_int_quant.tflite[0m
+ [94m-size: [91m274272   [94malignment: [91m32   [94mpath: [92m/rom/person_detect.tflite[0m
+ [94m-size: [91m17       [94malignment: [91m4    [94mpath: [92m/rom/person_detect.txt[0m
+ [94m-size: [91m317848   [94malignment: [91m32   [94mpath: [92m/rom/yolo_lc_192.tflite[0m
+ [94m-size: [91m8        [94malignment: [91m4    [94mpath: [92m/rom/yolo_lc_192.txt[0m
+ [94m-size: [91m3233408  [94malignment: [91m32   [94mpath: [92m/rom/yolov8n_192.tflite[0m
+ [94m-size: [91m8        [94malignment: [91m4    [94mpath: [92m/rom/yolov8n_192.txt[0m
+ [94m-size: [91m220232   [94malignment: [91m32   [94mpath: [92m/rom/blazeface_front_128.tflite[0m
+ [94m-size: [91m776616   [94malignment: [91m32   [94mpath: [92m/rom/face_landmarks_192.tflite[0m
+ [94m-size: [91m1468248  [94malignment: [91m32   [94mpath: [92m/rom/palm_detection_full_192.tflite[0m
+ [94m-size: [91m3321688  [94malignment: [91m32   [94mpath: [92m/rom/hand_landmarks_full_224.tflite[0m
+ [94m-size: [91m2799016  [94malignment: [91m32   [94mpath: [92m/rom/movenet_singlepose_192.tflite[0m
+ [94m-size: [91m19041    [94malignment: [91m4    [94mpath: [92m/rom/haarcascade_eye.cascade[0m
+ [94m-size: [91m10280    [94malignment: [91m4    [94mpath: [92m/rom/haarcascade_smile.cascade[0m
+ [94m-size: [91m52396    [94malignment: [91m4    [94mpath: [92m/rom/haarcascade_frontalface.cascade[0m
+
+   text	   data	    bss	    dec	    hex	filename
+  46284	     32	  22320	  68636	  10c1c	/home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/bin/bootloader.elf
+   text	   data	    bss	    dec	    hex	filename
+1996672	   7544	62747524	64751740	3dc087c	/home/danny/REPOS/openmv-n6/openmv/build/OPENMV_N6/bin/firmware.elf

@@ -54,6 +54,9 @@ endif
 ifeq ($(MICROPY_PY_IMU), 1)
 MPY_CFLAGS += -DMICROPY_PY_IMU=1
 MPY_MKARGS += MICROPY_PY_IMU=1
+else ifeq ($(MICROPY_PY_IMU), 0)
+MPY_CFLAGS += -DMICROPY_PY_IMU=0
+MPY_MKARGS += MICROPY_PY_IMU=0
 endif
 
 ifeq ($(MICROPY_PY_CRC), 1)
@@ -74,16 +77,25 @@ endif
 ifeq ($(MICROPY_PY_AUDIO), 1)
 MPY_CFLAGS += -DMICROPY_PY_AUDIO=1
 MPY_MKARGS += MICROPY_PY_AUDIO=1
+else ifeq ($(MICROPY_PY_AUDIO), 0)
+MPY_CFLAGS += -DMICROPY_PY_AUDIO=0
+MPY_MKARGS += MICROPY_PY_AUDIO=0
 endif
 
 ifeq ($(MICROPY_PY_DISPLAY), 1)
 MPY_CFLAGS += -DMICROPY_PY_DISPLAY=1
 MPY_MKARGS += MICROPY_PY_DISPLAY=1
+else ifeq ($(MICROPY_PY_DISPLAY), 0)
+MPY_CFLAGS += -DMICROPY_PY_DISPLAY=0
+MPY_MKARGS += MICROPY_PY_DISPLAY=0
 endif
 
 ifeq ($(MICROPY_PY_TV), 1)
 MPY_CFLAGS += -DMICROPY_PY_TV=1
 MPY_MKARGS += MICROPY_PY_TV=1
+else ifeq ($(MICROPY_PY_TV), 0)
+MPY_CFLAGS += -DMICROPY_PY_TV=0
+MPY_MKARGS += MICROPY_PY_TV=0
 endif
 
 ifeq ($(CUBEAI), 1)
@@ -130,6 +142,20 @@ MPY_CFLAGS += -I$(TOP_DIR)/$(MICROPY_DIR)/lib/lwip/src/include
 MPY_CFLAGS += -I$(TOP_DIR)/$(MICROPY_DIR)/ports/$(PORT)/lwip_inc
 
 MPY_MKARGS += MICROPY_PY_LWIP=1
+else ifeq ($(MICROPY_PY_LWIP), 0)
+MPY_CFLAGS += -DMICROPY_PY_LWIP=0
+MPY_MKARGS += MICROPY_PY_LWIP=0
+endif
+
+# Preserve explicit board overrides of MicroPython's network/socket defaults.
+ifneq ($(MICROPY_PY_NETWORK),)
+MPY_CFLAGS += -DMICROPY_PY_NETWORK=$(MICROPY_PY_NETWORK)
+MPY_MKARGS += MICROPY_PY_NETWORK=$(MICROPY_PY_NETWORK)
+endif
+
+ifneq ($(MICROPY_PY_SOCKET),)
+MPY_CFLAGS += -DMICROPY_PY_SOCKET=$(MICROPY_PY_SOCKET)
+MPY_MKARGS += MICROPY_PY_SOCKET=$(MICROPY_PY_SOCKET)
 endif
 
 # +-----------------------------------------------------+
@@ -144,6 +170,11 @@ MPY_CFLAGS += -I$(TOP_DIR)/$(MICROPY_DIR)/lib/mbedtls/include
 MPY_MKARGS += MICROPY_PY_SSL=1
 MPY_MKARGS += MICROPY_PY_SSL_ECDSA_SIGN_ALT=$(MICROPY_PY_SSL_ECDSA_SIGN_ALT)
 MPY_MKARGS += MICROPY_SSL_MBEDTLS=1
+else ifeq ($(MICROPY_SSL_MBEDTLS), 0)
+MPY_CFLAGS += -DMICROPY_PY_SSL=0
+MPY_CFLAGS += -DMICROPY_SSL_MBEDTLS=0
+MPY_MKARGS += MICROPY_PY_SSL=0
+MPY_MKARGS += MICROPY_SSL_MBEDTLS=0
 endif
 
 # +-----------------------------------------------------+
@@ -152,6 +183,10 @@ endif
 ifeq ($(MICROPY_PY_NETWORK_CYW43), 1)
 MPY_CFLAGS += -DMICROPY_PY_NETWORK_CYW43=1
 MPY_MKARGS += MICROPY_PY_NETWORK_CYW43=1
+else ifeq ($(MICROPY_PY_NETWORK_CYW43), 0)
+# Forward explicit disable settings; some MicroPython boards default to 1.
+MPY_CFLAGS += -DMICROPY_PY_NETWORK_CYW43=0
+MPY_MKARGS += MICROPY_PY_NETWORK_CYW43=0
 endif
 
 # +-----------------------------------------------------+
@@ -164,6 +199,14 @@ MPY_CFLAGS += -DMICROPY_BLUETOOTH_NIMBLE=1
 
 MPY_MKARGS += MICROPY_PY_BLUETOOTH=1
 MPY_MKARGS += MICROPY_BLUETOOTH_NIMBLE=1
+else ifeq ($(MICROPY_BLUETOOTH_NIMBLE),0)
+MPY_CFLAGS += -DMICROPY_BLUETOOTH_NIMBLE=0
+MPY_MKARGS += MICROPY_BLUETOOTH_NIMBLE=0
+endif
+
+ifeq ($(MICROPY_PY_BLUETOOTH),0)
+MPY_CFLAGS += -DMICROPY_PY_BLUETOOTH=0
+MPY_MKARGS += MICROPY_PY_BLUETOOTH=0
 endif
 
 # +-----------------------------------------------------+
@@ -234,7 +277,8 @@ $(MPY_LIB): FORCE | FIRM_DIRS
 	$(ECHO) "AR $@"
 	$(RM) -f $@
 	$(AR) rcs $@ $$(find $(BUILD)/$(MICROPY_DIR) -name '*.o' \
-        ! -path '$(BUILD)/$(MICROPY_DIR)$(TOP_DIR)/*' \
+        \( ! -path '$(BUILD)/$(MICROPY_DIR)$(TOP_DIR)/*' \
+           -o -path '$(BUILD)/$(MICROPY_DIR)$(patsubst %/,%,$(MP_BOARD_CONFIG_DIR))/*' \) \
         ! -name 'main.*' \
         ! -name 'pendsv.*' \
         $(MPY_LIB_EXCLUDE))
